@@ -1,9 +1,9 @@
 class Match:
-    def __init__(self, theyear, teamA, teamB, result = None):
+    def __init__(self, theyear, teamA, teamB):
         self.teamA = teamA
         self.teamB = teamB
         self.year = theyear
-        self.result = None
+        self.predicted_result = None
     
     def update_result(self, result):
-        self.result = result
+        self.predicted_result = result
