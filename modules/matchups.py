@@ -1,7 +1,9 @@
 from match import Match
+
 import pandas as pd
 
 input_file = 'data/NCAATourneySeeds.csv'
+regular_season_file = 'data/RegularSeasonCompactResults.csv'
 
 class Matchups:
     def __init__(self):
@@ -17,3 +19,8 @@ class Matchups:
             for j in range(i+1, len(teamID)):
                 matchups.append(Match(year = theyear, teamA= teamID[i], teamB=teamID[j]))
         return matchups
+
+    def get_completed_matchups(self):
+        data = pd.read_csv(regular_season_file)
+        completed_matchups = []
+        for i in rang
