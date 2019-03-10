@@ -4,7 +4,6 @@ from modules.output_generator import OutputGenerator
 
 
 def main():
-    return
     match_predictor = MatchPredictor()
     output_generator = OutputGenerator()
     matchups = Matchups()
