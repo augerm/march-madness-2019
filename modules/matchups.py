@@ -4,10 +4,10 @@ import pandas as pd
 input_file = 'data/NCAATourneySeeds.csv'
 
 class Matchups:
-    def __init__():
+    def __init__(self):
         pass
         
-    def get_matchups():
+    def get_matchups(self):
         theyear = 2018
         data = pd.read_csv(input_file)
         data = data[data['Season']==theyear]
