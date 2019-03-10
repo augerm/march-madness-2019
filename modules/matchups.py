@@ -31,7 +31,4 @@ class Matchups:
             else:
                 completed_matchups.append(CompletedMatch(year = line['Season'], teamB = line['WTeamID'], teamA = line['LTeamID'], 
                     scoreB = line['WScore'], scoreA = line['LScore'], result = False, day_num = line['DayNum']))
-            
-
-        # for i in range(1):
-            # print(data.loc[i]['Season'])
+        return completed_matchups
