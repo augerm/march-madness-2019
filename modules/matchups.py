@@ -27,10 +27,10 @@ class Matchups:
             line = data.loc[i]
             if line['WTeamID'] < line['LTeamID']:
                 completed_matchups.append(CompletedMatch(year = line['Season'], teamA = line['WTeamID'], teamB = line['LTeamID'], 
-                    scoreA = line['WScore'], scoreB = line['LScore'], result = True, dayNum = line['DayNum']))
+                    scoreA = line['WScore'], scoreB = line['LScore'], result = True, day_num = line['DayNum']))
             else:
                 completed_matchups.append(CompletedMatch(year = line['Season'], teamB = line['WTeamID'], teamA = line['LTeamID'], 
-                    scoreB = line['WScore'], scoreA = line['LScore'], result = False, dayNum = line['DayNum']))
+                    scoreB = line['WScore'], scoreA = line['LScore'], result = False, day_num = line['DayNum']))
             
 
         # for i in range(1):
