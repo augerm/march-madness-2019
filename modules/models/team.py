@@ -5,12 +5,12 @@ class Team:
         self.total_points = 0
         self.num_games = 0
         self.id = "{}_{}".format(year, team_id)
-        self.ppg = self.total_points / self.num_games
+        self.ppg = 0
 
     def add_match(self, match):
-        if match.teamA == self.team_id:
+        if match.teamA.id == self.id:
             self.total_points += match.scoreA
-        elif match.teamB == self.team_id:
+        elif match.teamB.id == self.id:
             self.total_points += match.scoreB
         else:
             return

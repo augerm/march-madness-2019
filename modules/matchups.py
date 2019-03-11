@@ -33,7 +33,7 @@ class Matchups:
                     teamB = Team(match_year, teamIDs[j])
                     self.teams_dict[teamB_key] = teamB
 
-                match = Match(year=match_year, teamA=teamA, teamB=teamB)
+                match = Match(match_year=match_year, teamA=teamA, teamB=teamB)
                 teamA.add_match(match)
                 teamB.add_match(match)
                 matchups.append(match)
