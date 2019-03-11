@@ -7,7 +7,7 @@ def main():
     match_predictor = MatchPredictor()
     output_generator = OutputGenerator()
     matchups = Matchups()
-    matches = matchups.get_matchups()
+    matches = matchups.get_matchups(1985)
 
     for match in matches:
         result = match_predictor.get_result(match)

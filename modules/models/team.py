@@ -7,11 +7,11 @@ class Team:
         self.id = "{}_{}".format(year, team_id)
         self.ppg = 0
 
-    def add_match(self, match):
-        if match.teamA.id == self.id:
-            self.total_points += match.scoreA
-        elif match.teamB.id == self.id:
-            self.total_points += match.scoreB
+    def add_completed_match(self, completed_match):
+        if completed_match.teamA.id == self.id:
+            self.total_points += completed_match.scoreA
+        elif completed_match.teamB.id == self.id:
+            self.total_points += completed_match.scoreB
         else:
             return
 
