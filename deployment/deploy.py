@@ -19,7 +19,7 @@ project = 'march-madness-2019'
 zone = 'us-east1-b'
 
 # Name of the instance resource to start.
-instance = 'machine-learning-tf-keras-1'
+instance = 'machine-learning-tf-keras-2'
 
 request = service.instances().start(project=project, zone=zone, instance=instance)
 response = request.execute()
