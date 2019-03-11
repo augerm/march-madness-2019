@@ -8,6 +8,7 @@ regular_season_file = 'data/RegularSeasonCompactResults.csv'
 
 class Matchups:
     def __init__(self):
+        #test commit - Max
         self.teams_dict = {}
         
     def get_matchups(self, match_year):
