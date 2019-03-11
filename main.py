@@ -15,5 +15,4 @@ def main():
 
     output_generator.write_results(matches)
 
-
 main()
