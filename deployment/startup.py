@@ -9,4 +9,4 @@ os.system('python3 ../main.py')
 
 # Turn off machine when finished in order to limit costs.
 print("@@@ Shutting down machine...")
-os.system('sudo poweroff')
+# os.system('sudo poweroff')
