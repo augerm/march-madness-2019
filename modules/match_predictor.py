@@ -3,4 +3,4 @@ class MatchPredictor:
         print("Initializing match predictor")
 
     def get_result(self, match):
-        return 0.5
+        return 0.6
