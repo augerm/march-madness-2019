@@ -35,10 +35,9 @@ class Matchups:
         return matchups
 
 
-    def get_completed_matchups_fast(self):
+    def get_completed_matchups(self):
         """
-        it is returning a list of dictionaries
-
+        return a list of completed matchups
         :return:
         """
         data = pd.read_csv(regular_season_file)
@@ -49,46 +48,24 @@ class Matchups:
         data['day_num'] = data['DayNum']
         data['year'] = data['Season']
         data['result'] = np.where(data['scoreA'] > data['scoreB'], 1, 0)
-        completed_matchups = data[['year','teamA','teamB','scoreA','scoreB','day_num', 'result']].to_dict('records')
-        for i in range(len(completed_matchups)):
-            teamA_key = Team.get_key(completed_matchups[i]['year'], completed_matchups[i]['teamA'])
-            teamB_key = Team.get_key(completed_matchups[i]['year'], completed_matchups[i]['teamB'])
+        completed_matchups_list_dict = data[['year','teamA','teamB','scoreA','scoreB','day_num', 'result']].to_dict('records')
+        completed_matchups = []
+        for i in range(len(completed_matchups_list_dict)):
+            cur_matchup = completed_matchups_list_dict[i]
+            teamA_key = Team.get_key(cur_matchup['year'], cur_matchup['teamA'])
+            teamB_key = Team.get_key(cur_matchup['year'], cur_matchup['teamB'])
             teamA = self.teams_dict.get(teamA_key, None)
             teamB = self.teams_dict.get(teamB_key, None)
-            completed_matchups[i]['teamA'] = self.teams_dict[teamA_key]
-            completed_matchups[i]['teamB'] = self.teams_dict[teamB_key]
+            completed_match = CompletedMatch(cur_matchup['year'], teamA, teamB,  cur_matchup['day_num'],
+                                             cur_matchup['scoreA'], cur_matchup['scoreB'],
+                                             cur_matchup['result'])
+
             if teamA is None or teamB is None:
-                print(i, teamA_key, teamB_key)
+                print("None vaule {}th row for teamA {}, teamB{}".format(i, teamA_key, teamB_key))
             else:
-                teamA.add_completed_match(completed_matchups[i])
-                teamB.add_completed_match(completed_matchups[i])
+                teamA.add_completed_match(completed_match)
+                teamB.add_completed_match(completed_match)
+                completed_matchups.append(completed_match)
         return completed_matchups
 
-    def get_completed_matchups(self):
-        data = pd.read_csv(regular_season_file)
-        completed_matchups = []
-        for i in range(len(data)):
-            line = data.loc[i]
-            if line['WTeamID'] < line['LTeamID']:
-                teamA_key = Team.get_key(line['Season'], line['WTeamID'])
-                teamB_key = Team.get_key(line['Season'], line['LTeamID'])
-                teamA = self.teams_dict.get(teamA_key, None)
-                teamB = self.teams_dict.get(teamB_key, None)
-                if not teamA or not teamB:
-                    continue
-                completed_match = CompletedMatch(line['Season'], teamA, teamB, 0, line['WScore'], line['LScore'], 1)
-            else:
-                teamA_key = Team.get_key(line['Season'], line['LTeamID'])
-                teamB_key = Team.get_key(line['Season'], line['WTeamID'])
-                teamA = self.teams_dict.get(teamA_key, None)
-                teamB = self.teams_dict.get(teamB_key, None)
-                if not teamA or not teamB:
-                    continue
-                completed_match = CompletedMatch(line['Season'], teamA, teamB, 0, line['WScore'], line['LScore'], 0)
-            completed_matchups.append(completed_match)
-            teamA.add_completed_match(completed_match)
-            teamB.add_completed_match(completed_match)
-        return completed_matchups
 
-    # def build_teams_dict(self):
-        # teams[team.id] = team
