@@ -1,10 +1,11 @@
 class Team:
-    def __init__(self, year, team_id, kenpom_data):
+    def __init__(self, year, team_id, team_name, kenpom_data = None):
         self.year = year
         self.team_id = team_id
         self.total_points = 0
         self.num_games = 0
         self.id = "{}_{}".format(year, team_id)
+        self.name = team_name
         self.ppg = 0
         self.kenpom_data = kenpom_data
 
