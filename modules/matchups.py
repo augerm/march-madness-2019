@@ -3,8 +3,8 @@ from modules.models.team import Team
 from modules.models.completed_match import CompletedMatch
 import pandas as pd
 
-input_file = 'data/NCAATourneySeeds.csv'
-regular_season_file = 'data/RegularSeasonCompactResults.csv'
+input_file = '../data/NCAATourneySeeds.csv'
+regular_season_file = '../data/RegularSeasonCompactResults.csv'
 
 class Matchups:
     def __init__(self):

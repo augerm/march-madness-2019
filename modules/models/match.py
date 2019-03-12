@@ -8,3 +8,6 @@ class Match:
 
     def update_result(self, result):
         self.predicted_result = result
+
+    def get_features(self):
+        return [self.teamA.ppg, self.teamB.ppg]
