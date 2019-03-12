@@ -26,7 +26,7 @@ class TeamReader:
             team_id = team_ids[i]
             start_season = start_seasons[i]
             end_season = end_seasons[i]
-            for year in range(start_season, end_season):
+            for year in range(start_season, end_season+1):
                 team = Team(year, team_id, team_name)
                 self.teams[team.id] = team
         return self.teams
