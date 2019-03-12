@@ -5,7 +5,7 @@ print("@@@ Fetching origin...")
 print('git pull origin master...')
 
 print("@@@ Running main.py...")
-os.system('python3 ../main.py')
+os.system('python3 ../modules/train.py')
 
 # Turn off machine when finished in order to limit costs.
 print("@@@ Shutting down machine...")
