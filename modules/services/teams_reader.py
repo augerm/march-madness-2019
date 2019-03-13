@@ -2,7 +2,7 @@ import pandas as pd
 
 from modules.models.team import Team
 
-teams_input_file = '../data/DataFiles/Teams.csv'
+teams_input_file = 'data/DataFiles/Teams.csv'
 data_input_file = '../../data/2018.csv'
 
 class TeamReader:
