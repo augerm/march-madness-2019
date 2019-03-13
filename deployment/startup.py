@@ -3,7 +3,7 @@ import os
 print("@@@ Running startup script...")
 
 print("@@@ Navigating to project folder")
-os.system('cd /home/michaelauger23/march-madness-2019')
+os.system('sudo cd /home/michaelauger23/march-madness-2019')
 
 print("@@@ Printing working directory")
 os.system('pwd')
