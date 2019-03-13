@@ -10,6 +10,7 @@ import os
 file_path = os.path.dirname(__file__)
 input_file = os.path.join(file_path, '../data/DataFiles/NCAATourneySeeds.csv')
 regular_season_file = os.path.join(file_path, '../data/DataFiles/RegularSeasonCompactResults.csv')
+post_season_file = os.path.join(file_path, '../data/DataFiles/NCAATourneyCompactResults.csv')
 
 class Matchups:
     def __init__(self):
@@ -37,20 +38,31 @@ class Matchups:
         return matchups
 
 
-    def get_completed_matchups(self):
+    def get_completed_matchups(self, until_year=2018):
         """
+        until_year: if equal 2018, it will return all regular season of 2018, and regular + post season before 2018
+
         return a list of completed matchups
         :return:
         """
-        data = pd.read_csv(regular_season_file)
-        data['teamA'] = data[['WTeamID', 'LTeamID']].min(axis = 1)
-        data['teamB'] = data[['WTeamID', 'LTeamID']].max(axis = 1)
-        data['scoreA'] = np.where(data['teamA'] == data['WTeamID'], data['WScore'], data['LScore'])
-        data['scoreB'] = np.where(data['teamB'] == data['WTeamID'], data['WScore'], data['LScore'])
-        data['day_num'] = data['DayNum']
-        data['year'] = data['Season']
-        data['result'] = np.where(data['scoreA'] > data['scoreB'], 1, 0)
-        completed_matchups_list_dict = data[['year','teamA','teamB','scoreA','scoreB','day_num', 'result']].to_dict('records')
+        def read_compact_result_to_dict(file, last_year):
+            data = pd.read_csv(file)
+            data = data[data['Season'] <= last_year]
+            data['teamA'] = data[['WTeamID', 'LTeamID']].min(axis=1)
+            data['teamB'] = data[['WTeamID', 'LTeamID']].max(axis=1)
+            data['scoreA'] = np.where(data['teamA'] == data['WTeamID'], data['WScore'], data['LScore'])
+            data['scoreB'] = np.where(data['teamB'] == data['WTeamID'], data['WScore'], data['LScore'])
+            data['day_num'] = data['DayNum']
+            data['year'] = data['Season']
+            data['result'] = np.where(data['scoreA'] > data['scoreB'], 1, 0)
+            return_dict = data[
+                ['year', 'teamA', 'teamB', 'scoreA', 'scoreB', 'day_num', 'result']].to_dict('records')
+            return return_dict
+        completed_matchups_list_dict = []
+        data = read_compact_result_to_dict(regular_season_file,  last_year=until_year)
+        post_data = read_compact_result_to_dict(post_season_file, last_year=until_year - 1)
+        completed_matchups_list_dict.extend(data)
+        completed_matchups_list_dict.extend(post_data)
         completed_matchups = []
         for i in range(len(completed_matchups_list_dict)):
             cur_matchup = completed_matchups_list_dict[i]
