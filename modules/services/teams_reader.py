@@ -5,7 +5,9 @@ from modules.models.team import Team
 
 file_path = os.path.dirname(__file__)
 teams_input_file = os.path.join(file_path, '../../data/DataFiles/Teams.csv')
+teams_spelling_file = os.path.join(file_path, '../../data/DataFiles/TeamSpellings.csv')
 data_input_file = os.path.join(file_path, '../../data/2018.csv')
+kenpom_file = os.path.join(file_path, '../../data/DataFiles/kenpom.csv')
 
 class TeamReader:
 
@@ -96,7 +98,9 @@ class TeamReader:
     @staticmethod
     def addSeedColumn(starting_year, seasons):
         """
-        function to get the kenpom data from dataset
+        function to get the kenpom data from raw_data, no need to call in the future.
+        call (2002, 17) to get current data. may need to update every year.
+        output: kenpom.csv
         """
         years = []
         for x in range(seasons):
@@ -116,3 +120,15 @@ class TeamReader:
         df = df.drop('W-L', axis=1) # drop W-L since there are wrong values. treating some value as date format
         df.to_csv("../data/DataFiles/kenpom.csv", index=False)
 
+    @staticmethod
+    def map_kenpom_data():
+        """
+        map kenpom_data. used kenpom.csv and teamspelling.csv
+        :return: write to a new csv
+        """
+        data = pd.read_csv(kenpom_file)
+        data['Team'] = data['Team'].str.lower()
+        teams = pd.read_csv(teams_spelling_file, encoding="ISO-8859-1")
+        teams.rename(columns = {'TeamNameSpelling':'Team'},inplace = True)
+        new_data = data.merge(teams, on='Team', how='left')
+        new_data.to_csv("../data/DataFiles/kenpom_map_v1.csv", index=False)
