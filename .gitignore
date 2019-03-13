@@ -7,3 +7,5 @@ service-keys
 testing/testing.ipynb
 venv/
 data/
+testing/.ipynb_checkpoints
+testing/.pytest_cache

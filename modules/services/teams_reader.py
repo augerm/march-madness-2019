@@ -1,9 +1,11 @@
 import pandas as pd
+import os
 
 from modules.models.team import Team
 
-teams_input_file = '../data/DataFiles/Teams.csv'
-data_input_file = '../../data/2018.csv'
+file_path = os.path.dirname(__file__)
+teams_input_file = os.path.join(file_path, '../../data/DataFiles/Teams.csv')
+data_input_file = os.path.join(file_path, '../../data/2018.csv')
 
 class TeamReader:
 
