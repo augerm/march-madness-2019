@@ -93,32 +93,26 @@ class TeamReader:
         else:
             return True
 
-    def addSeedColumn(self, starting_year, seasons):
+    @staticmethod
+    def addSeedColumn(starting_year, seasons):
+        """
+        function to get the kenpom data from dataset
+        """
         years = []
         for x in range(seasons):
             years.append(starting_year + x)
-
+        data_list = []
+        count = 0
         for year in years:
-            input_file = '../../data/%s.csv' % year
-            data = pd.read_csv(input_file)
-            data.insert(2, 'Seed', 99999)
-            for x in range(len(data) - 1):
-                name_items = data['Team'][x].split('\xa0')
-                #all teams len(name_items) == 2 should have a seed
-                if len(name_items) == 2:
-                    data['Seed'][x] = name_items[1]
-                else:
-                    data['Seed'][x] = None
+            input_file = '../data/%s.csv' % year
+            data = pd.read_csv(input_file, encoding="ISO-8859-1")
+            name_items =[i.split('?') for i in data['Team']]
+            data['Team'] = [i[0] for i in name_items]
+            data['Seed'] = [i[1] if len(i)>1 else None for i in name_items ]
+            data['Season'] = year
+            count += len(data)
+            data_list.append(data)
+        df = pd.concat(data_list)
+        df = df.drop('W-L', axis=1) # drop W-L since there are wrong values. treating some value as date format
+        df.to_csv("../data/DataFiles/kenpom.csv", index=False)
 
-                #set string in team column to team's name
-                data['Team'][x] = name_items[0]
-                print('Team: {} Regional Seed: {}'.format(data['Team'][x], data['Seed'][x]))
-            data.to_csv('../../data_2/%s_2.csv' % year)
-
-    addSeedColumn(2002, 17)
-
-    # def renameUnnamedColumns(self):
-    #     '''
-    #     renames columns that are currently unnamed
-    #     :return:
-    #     '''
