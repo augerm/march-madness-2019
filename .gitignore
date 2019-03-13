@@ -5,3 +5,5 @@ __pycache__/
 .DS_Store
 service-keys
 testing/testing.ipynb
+testing/.ipynb_checkpoints
+testing/.pytest_cache
