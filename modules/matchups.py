@@ -5,9 +5,11 @@ from modules.services.teams_reader import TeamReader
 
 import pandas as pd
 import numpy as np
+import os
 
-input_file = '../data/DataFiles/NCAATourneySeeds.csv'
-regular_season_file = '../data/DataFiles/RegularSeasonCompactResults.csv'
+file_path = os.path.dirname(__file__)
+input_file = os.path.join(file_path, '../data/DataFiles/NCAATourneySeeds.csv')
+regular_season_file = os.path.join(file_path, '../data/DataFiles/RegularSeasonCompactResults.csv')
 
 class Matchups:
     def __init__(self):
