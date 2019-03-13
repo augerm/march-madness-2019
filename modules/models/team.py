@@ -1,3 +1,5 @@
+from modules.services.teams_reader import TeamReader
+
 class Team:
     def __init__(self, year, team_id, team_name, kenpom_data = None):
         self.year = year
@@ -7,7 +9,8 @@ class Team:
         self.id = "{}_{}".format(year, team_id)
         self.name = team_name
         self.ppg = 0
-        self.kenpom_data = kenpom_data
+        self.team_reader = TeamReader()
+        self.kenpom_data = self.team_reader.getTeamData(self.team_id)
 
     def add_completed_match(self, completed_match):
         if completed_match.teamA.id == self.id:
