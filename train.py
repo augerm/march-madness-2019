@@ -12,15 +12,12 @@ train_y = list(map(lambda completed_matchup: completed_matchup.result, completed
 
 # Create neural network architecture
 model = k.Sequential()
-model.add(k.layers.Dense(len(train_x), input_dim=36, activation='relu'))
-model.add(k.layers.Dense(16, activation='relu'))
-model.add(k.layers.Dense(8, activation='relu'))
-model.add(k.layers.Dense(4, activation='relu'))
-model.add(k.layers.Dense(2, activation='relu'))
+model.add(k.layers.Dense(len(train_x), input_dim=36, activation='sigmoid'))
+model.add(k.layers.Dense(600, activation='sigmoid'))
 model.add(k.layers.Dense(1, activation='sigmoid'))
 
-model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-model.fit(np.array(train_x), np.array(train_y), epochs=1, batch_size=1000)
+model.compile(loss='mean_squared_error', optimizer='sgd', metrics=['accuracy'])
+model.fit(np.array(train_x), np.array(train_y), epochs=5, batch_size=1000)
 
 test_loss, test_acc = model.evaluate(np.array(train_x), np.array(train_y))
 
