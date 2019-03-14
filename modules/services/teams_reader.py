@@ -2,12 +2,14 @@ import pandas as pd
 import os
 
 from modules.models.team import Team
+from modules.models.kenpom_data import KenPom
 
 file_path = os.path.dirname(__file__)
 teams_input_file = os.path.join(file_path, '../../data/DataFiles/Teams.csv')
 teams_spelling_file = os.path.join(file_path, '../../data/DataFiles/TeamSpellings.csv')
 data_input_file = os.path.join(file_path, '../../data/2018.csv')
 kenpom_file = os.path.join(file_path, '../../data/DataFiles/kenpom.csv')
+kenpom_map = os.path.join(file_path, '../../data/DataFiles/kenpom_map_v1.csv')
 
 class TeamReader:
 
@@ -17,8 +19,6 @@ class TeamReader:
     def getTeamData(self, team_id):
         #makes dictionary of team_from kaggle data
         self.get_teams()
-
-
 
     def update_result(self, result):
         self.predicted_result = result
@@ -31,30 +31,28 @@ class TeamReader:
         team_ids = list(teams_df['TeamID'])
         start_seasons = list(teams_df['FirstD1Season'])
         end_seasons = list(teams_df['LastD1Season'])
+        data = pd.read_csv(kenpom_map)
         for i in range(len(team_names)):
             team_name = team_names[i]
             team_id = team_ids[i]
             start_season = start_seasons[i]
             end_season = end_seasons[i]
             for year in range(start_season, end_season+1):
-                team = Team(year, team_id, team_name)
+                x = self.getTeamDataBySeason(data, team_id, year)
+                kenpom_data = KenPom(x['Rk'], x['Seed'], x['Conf'], x['AdjEM'], x['AdjO'], x['AdjO_rank'], x['AdjD'], x['AdjD_rank'], x['AdjT'], x['AdjT_rank'], x['Luck'], x['Luck_rank'], x['AdjEM.1'], x['AdjEM_rank'], x['OppO'], x['OppO_rank'], x['OppD'], x['OppD_rank'], x['AdjEM.2'])
+                team = Team(year, team_id, team_name, kenpom_data)
                 self.teams[team.id] = team
         return self.teams
 
-    def getTeamDataBySeason(self):
-        seasons = 1
-        start_season = 2018
-        season_years = []
-        for x in range(seasons):
-            season_years.append(int(start_season + x))
-        for year in season_years:
-            input_file = '../../data/2018'
-            data = pd.read_csv(data_input_file, skiprows=1)
-            for x in range(len(data)):
-                data_team = data.loc[data['Rk'] == x + 1]
-                team_name = data[x]['Team']
-                self.getTeamCode(team_name)
-                print(team_name)
+    def getTeamDataBySeason(self, data, team_id, team_year):
+        result = data.loc[((data['Season'] == team_year) & (data['TeamID'] == team_id))].any()
+        # result['Team'] will be false if no items met the criteria above
+        if not result['Team']:
+            data_team = None
+        else:
+            data_team = data.loc[(data['Season'] == team_year) & (data['TeamID'] == team_id)]
+
+        return data_team
 
     def getTeamCode(self):
         #finds associated team code with team name reported on csv input file
