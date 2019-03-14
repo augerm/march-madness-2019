@@ -9,9 +9,11 @@ from modules.loss_function import get_loss_single
 # maybe also load test data, and predict data!
 def get_train_data():
     matchups = Matchups()
-    completed_matchups = matchups.get_completed_matchups()
+    completed_matchups = matchups.get_completed_matchups(until_year=2015)
     train_x = list(map(lambda completed_matchup: completed_matchup.get_features(), completed_matchups))
     train_y = list(map(lambda completed_matchup: completed_matchup.result, completed_matchups))
+    train_x = train_x[:8000]
+    train_y = train_y[:8000]
     print("finished loading train data")
     return np.array(train_x), np.array(train_y)
 
