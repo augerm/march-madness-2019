@@ -17,7 +17,7 @@ model.add(k.layers.Dense(len(train_x), input_dim=36, activation='sigmoid'))
 model.add(k.layers.Dense(600, activation='sigmoid'))
 model.add(k.layers.Dense(1, activation='sigmoid'))
 
-model.compile(loss=get_loss_single, optimizer='sgd', metrics=['accuracy'])
+model.compile(loss='binary_crossentropy', optimizer='sgd', metrics=['accuracy'])
 model.fit(np.array(train_x), np.array(train_y), epochs=5, batch_size=1000)
 
 test_loss, test_acc = model.evaluate(np.array(train_x), np.array(train_y))
