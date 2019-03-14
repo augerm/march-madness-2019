@@ -9,3 +9,4 @@ venv/
 data/
 testing/.ipynb_checkpoints
 testing/.pytest_cache
+keras_models
