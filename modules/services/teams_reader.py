@@ -42,7 +42,12 @@ class TeamReader:
                 # TODO: Remove when we fill out all the non-mapped teams
                 if x is None:
                     continue
-                kenpom_data = KenPom(x['Rk'], x['Seed'], x['Conf'], x['AdjEM'], x['AdjO'], x['AdjO_rank'], x['AdjD'], x['AdjD_rank'], x['AdjT'], x['AdjT_rank'], x['Luck'], x['Luck_rank'], x['AdjEM.1'], x['AdjEM_rank'], x['OppO'], x['OppO_rank'], x['OppD'], x['OppD_rank'], x['AdjEM.2'])
+                kenpom_data = KenPom(x['Rk'].values[0], x['Seed'].values[0], x['Conf'].values[0], x['AdjEM'].values[0],
+                                     x['AdjO'].values[0], x['AdjO_rank'].values[0], x['AdjD'].values[0],
+                                     x['AdjD_rank'].values[0], x['AdjT'].values[0], x['AdjT_rank'].values[0],
+                                     x['Luck'].values[0], x['Luck_rank'].values[0], x['AdjEM.1'].values[0],
+                                     x['AdjEM_rank'].values[0], x['OppO'].values[0], x['OppO_rank'].values[0],
+                                     x['OppD'].values[0], x['OppD_rank'].values[0], x['AdjEM.2'].values[0])
                 team = Team(year, team_id, team_name, kenpom_data)
                 self.teams[team.id] = team
         return self.teams
