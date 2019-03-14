@@ -2,6 +2,7 @@ import tensorflow.keras as k
 import numpy as np
 import datetime
 from modules.matchups import Matchups
+from modules.loss_function import get_loss
 
 matchups = Matchups()
 
@@ -19,7 +20,7 @@ model.add(k.layers.Dense(4, activation='relu'))
 model.add(k.layers.Dense(2, activation='relu'))
 model.add(k.layers.Dense(1, activation='sigmoid'))
 
-model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+model.compile(loss=get_loss, optimizer='adam', metrics=['accuracy'])
 model.fit(np.array(train_x), np.array(train_y), epochs=1, batch_size=1000)
 
 test_loss, test_acc = model.evaluate(np.array(train_x), np.array(train_y))
