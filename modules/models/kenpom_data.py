@@ -20,11 +20,17 @@ class KenPom:
         self.schedule_defensive_margin_rank = opp_AdjD_rank
         self.non_conference_schedule_efficieny_margin = NCSOS
 
-    def get_features(self):
+    def get_features(self, simple=True):
+        """
+        :return: features excluding the rank of values. since they are highly correlated. we may use another
+        to say only return rank.
+        """
         #TODO: Add conference one hot encoded
-        return [self.country_rank, self.regional_rank, self.efficiency_margin,
-                self.offensive_efficiency, self.offensive_efficiency_rank, self.defensive_efficiency,
-                self.defensive_efficiency_rank, self.tempo, self.tempo_rank, self.luck, self.luck_rank,
-                self.schedule_efficiency_margin, self.schedule_efficiency_margin_rank, self.schedule_offensive_margin,
-                self.schedule_offensive_margin_rank, self.schedule_defensive_margin, self.schedule_defensive_margin_rank,
-                self.non_conference_schedule_efficieny_margin]
+        if simple:
+            return [self.offensive_efficiency, self.defensive_efficiency]
+        else:
+            return [self.country_rank, self.regional_rank, self.efficiency_margin,
+                self.offensive_efficiency, self.defensive_efficiency,
+                self.tempo,  self.luck, self.schedule_efficiency_margin,  self.schedule_offensive_margin,
+                self.schedule_defensive_margin, self.non_conference_schedule_efficieny_margin]
+

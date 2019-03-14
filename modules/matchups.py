@@ -78,7 +78,7 @@ class Matchups:
                                              cur_matchup['result'])
 
             if teamA is None or teamB is None:
-                print("None vaule {}th row for teamA {}, teamB{}".format(i, teamA_key, teamB_key))
+                print("None vaule {}th row for teamA {}, teamB{}, need mapping".format(i, teamA_key, teamB_key))
             else:
                 teamA.add_completed_match(completed_match)
                 teamB.add_completed_match(completed_match)
