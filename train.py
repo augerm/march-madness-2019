@@ -13,7 +13,10 @@ train_y = list(map(lambda completed_matchup: completed_matchup.result, completed
 # Create neural network architecture
 model = k.Sequential()
 model.add(k.layers.Dense(len(train_x), input_dim=36, activation='relu'))
+model.add(k.layers.Dense(16, activation='relu'))
 model.add(k.layers.Dense(8, activation='relu'))
+model.add(k.layers.Dense(4, activation='relu'))
+model.add(k.layers.Dense(2, activation='relu'))
 model.add(k.layers.Dense(1, activation='sigmoid'))
 
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
