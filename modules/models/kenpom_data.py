@@ -21,7 +21,8 @@ class KenPom:
         self.non_conference_schedule_efficieny_margin = NCSOS
 
     def get_features(self):
-        return [self.country_rank, self.regional_rank, self.conference, self.efficiency_margin,
+        #TODO: Add conference one hot encoded
+        return [self.country_rank, self.regional_rank, self.efficiency_margin,
                 self.offensive_efficiency, self.offensive_efficiency_rank, self.defensive_efficiency,
                 self.defensive_efficiency_rank, self.tempo, self.tempo_rank, self.luck, self.luck_rank,
                 self.schedule_efficiency_margin, self.schedule_efficiency_margin_rank, self.schedule_offensive_margin,
