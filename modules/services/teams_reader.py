@@ -39,6 +39,9 @@ class TeamReader:
             end_season = end_seasons[i]
             for year in range(start_season, end_season+1):
                 x = self.getTeamDataBySeason(data, team_id, year)
+                # TODO: Remove when we fill out all the non-mapped teams
+                if x is None:
+                    continue
                 kenpom_data = KenPom(x['Rk'], x['Seed'], x['Conf'], x['AdjEM'], x['AdjO'], x['AdjO_rank'], x['AdjD'], x['AdjD_rank'], x['AdjT'], x['AdjT_rank'], x['Luck'], x['Luck_rank'], x['AdjEM.1'], x['AdjEM_rank'], x['OppO'], x['OppO_rank'], x['OppD'], x['OppD_rank'], x['AdjEM.2'])
                 team = Team(year, team_id, team_name, kenpom_data)
                 self.teams[team.id] = team

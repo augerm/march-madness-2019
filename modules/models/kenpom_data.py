@@ -19,3 +19,11 @@ class KenPom:
         self.schedule_defensive_margin = opp_AdjD
         self.schedule_defensive_margin_rank = opp_AdjD_rank
         self.non_conference_schedule_efficieny_margin = NCSOS
+
+    def get_features(self):
+        return [self.country_rank, self.regional_rank, self.conference, self.efficiency_margin,
+                self.offensive_efficiency, self.offensive_efficiency_rank, self.defensive_efficiency,
+                self.defensive_efficiency_rank, self.tempo, self.tempo_rank, self.luck, self.luck_rank,
+                self.schedule_efficiency_margin, self.schedule_efficiency_margin_rank, self.schedule_offensive_margin,
+                self.schedule_offensive_margin_rank, self.schedule_defensive_margin, self.schedule_defensive_margin_rank,
+                self.non_conference_schedule_efficieny_margin]

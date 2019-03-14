@@ -10,4 +10,4 @@ class Match:
         self.predicted_result = result
 
     def get_features(self):
-        return [self.teamA.ppg, self.teamB.ppg]
+        return self.teamA.kenpom_data.get_features() + self.teamB.kenpom_data.get_features()

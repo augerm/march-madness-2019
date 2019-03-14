@@ -68,6 +68,9 @@ class Matchups:
             cur_matchup = completed_matchups_list_dict[i]
             teamA_key = Team.get_key(cur_matchup['year'], cur_matchup['teamA'])
             teamB_key = Team.get_key(cur_matchup['year'], cur_matchup['teamB'])
+            # TODO: Remove when we fill out all the non-mapped teams
+            if not teamA_key or not teamB_key:
+                continue
             teamA = self.teams_dict.get(teamA_key, None)
             teamB = self.teams_dict.get(teamB_key, None)
             completed_match = CompletedMatch(cur_matchup['year'], teamA, teamB,  cur_matchup['day_num'],

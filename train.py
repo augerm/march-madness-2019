@@ -12,7 +12,7 @@ train_y = list(map(lambda completed_matchup: completed_matchup.result, completed
 
 # Create neural network architecture
 model = k.Sequential()
-model.add(k.layers.Dense(len(train_x), input_dim=2, activation='relu'))
+model.add(k.layers.Dense(len(train_x), input_dim=38, activation='relu'))
 model.add(k.layers.Dense(8, activation='relu'))
 model.add(k.layers.Dense(1, activation='sigmoid'))
 
