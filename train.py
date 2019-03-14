@@ -1,7 +1,7 @@
 import tensorflow.keras as k
 import numpy as np
+import datetime
 from modules.matchups import Matchups
-
 
 matchups = Matchups()
 
@@ -23,5 +23,5 @@ test_loss, test_acc = model.evaluate(np.array(train_x), np.array(train_y))
 
 print('Test accuracy:', test_acc)
 
-date_str = datetime.datetime.today().strftime('%Y-%m-%d')
+date_str = str(datetime.datetime.now().strftime("%d-%B-%Y-%I-%M%p"))
 model.save('keras_models/{}.h5'.format(date_str))
