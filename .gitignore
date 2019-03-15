@@ -4,7 +4,6 @@ __pycache__/
 .idea
 .DS_Store
 service-keys
-testing/testing.ipynb
 venv/
 data/
 testing/.ipynb_checkpoints
