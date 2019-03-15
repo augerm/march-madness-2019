@@ -14,12 +14,17 @@ def get_train_data():
     train_y = list(map(lambda completed_matchup: completed_matchup.result, completed_matchups))
     train_x = train_x[:10000]
     train_y = train_y[:10000]
+
+    # normalize data
+    train_x = np.array(train_x)
+    train_y = np.array(train_y)
     print("finished loading train data")
     return np.array(train_x), np.array(train_y)
 
 
 def train_model():
     train_x, train_y = get_train_data()
+    print(len(train_x), len(train_y))
     # Create neural network architecture
     model = k.Sequential()
     model.add(k.layers.Dense(len(train_x), input_dim=len(train_x[0]), activation='sigmoid'))
@@ -37,4 +42,5 @@ def train_model():
     date_str = str(datetime.datetime.now().strftime("%d-%B-%Y-%I-%M%p"))
     model.save('keras_models/{}.h5'.format(date_str))
 
-train_model()
+# train_model()
+get_train_data()

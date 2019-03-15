@@ -7,9 +7,8 @@ from modules.models.kenpom_data import KenPom
 file_path = os.path.dirname(__file__)
 teams_input_file = os.path.join(file_path, '../../data/DataFiles/Teams.csv')
 teams_spelling_file = os.path.join(file_path, '../../data/DataFiles/TeamSpellings.csv')
-data_input_file = os.path.join(file_path, '../../data/2018.csv')
 kenpom_file = os.path.join(file_path, '../../data/DataFiles/kenpom.csv')
-kenpom_map = os.path.join(file_path, '../../data/DataFiles/kenpom_map_v1.csv')
+kenpom_map = os.path.join(file_path, '../../data/DataFiles/kenpom_map_v2.csv')
 
 class TeamReader:
 
@@ -38,8 +37,10 @@ class TeamReader:
             start_season = start_seasons[i]
             end_season = end_seasons[i]
             for year in range(start_season, end_season+1):
+                #TODO: need to remove 2019 for future prediction
+                if year < 2002 or year == 2019:
+                    continue
                 x = self.getTeamDataBySeason(data, team_id, year)
-                # TODO: Remove when we fill out all the non-mapped teams
                 if x is None:
                     continue
                 kenpom_data = KenPom(x['Rk'].values[0], x['Seed'].values[0], x['Conf'].values[0], x['AdjEM'].values[0],
