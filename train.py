@@ -12,8 +12,8 @@ def get_train_data():
     completed_matchups = matchups.get_completed_matchups(until_year=2015)
     train_x = list(map(lambda completed_matchup: completed_matchup.get_features(), completed_matchups))
     train_y = list(map(lambda completed_matchup: completed_matchup.result, completed_matchups))
-    train_x = train_x[:8000]
-    train_y = train_y[:8000]
+    train_x = train_x[:10000]
+    train_y = train_y[:10000]
     print("finished loading train data")
     return np.array(train_x), np.array(train_y)
 
@@ -28,7 +28,7 @@ def train_model():
 
     # optimizer - sgd, rmsprop
     model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=[metrics.binary_accuracy])
-    model.fit(np.array(train_x), np.array(train_y), epochs=5, batch_size=32)
+    model.fit(np.array(train_x), np.array(train_y), epochs=40, batch_size=100)
 
     test_loss, test_acc = model.evaluate(np.array(train_x), np.array(train_y))
 
