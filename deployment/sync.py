@@ -1,5 +1,8 @@
 import os
-from deployment.example_settings import *
+import sys
+sys.path.append("/home/michaelauger23/march-madness-2019")
+print(sys.path)
+from deployment.settings import *
 
 os.system('gsutil -m rsync -r {} {}'.format(local_data_directory, remote_data_directory))
 os.system('gsutil -m rsync -r {} {}'.format(remote_data_directory, local_data_directory))
