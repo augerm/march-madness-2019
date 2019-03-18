@@ -22,7 +22,7 @@ class TeamReader:
     def update_result(self, result):
         self.predicted_result = result
 
-    def get_teams(self):
+    def get_teams(self, slim = False):
         if self.teams.keys():
             return self.teams
         teams_df = pd.read_csv(teams_input_file)
@@ -31,6 +31,7 @@ class TeamReader:
         start_seasons = list(teams_df['FirstD1Season'])
         end_seasons = list(teams_df['LastD1Season'])
         data = pd.read_csv(kenpom_map)
+
         for i in range(len(team_names)):
             team_name = team_names[i]
             team_id = team_ids[i]
@@ -139,3 +140,11 @@ class TeamReader:
         teams.rename(columns = {'TeamNameSpelling':'Team'},inplace = True)
         new_data = data.merge(teams, on='Team', how='left')
         new_data.to_csv("../data/DataFiles/kenpom_map_v1.csv", index=False)
+
+    @staticmethod
+    def get_team_name_by_id(id):
+        teams_df = pd.read_csv(teams_input_file)
+        team_names = list(teams_df['TeamName'])
+        team_ids = list(teams_df['TeamID'])
+        index = team_ids.index(id)
+        return team_names[index]

@@ -1,5 +1,6 @@
 import pandas
 from modules.loss_function import get_loss_single
+from modules.services.teams_reader import TeamReader
 
 prediction_file = 'output/output.txt'
 results_file = 'data/DataFiles/NCAATourneyCompactResults.csv'
@@ -38,18 +39,23 @@ def get_loss(winning_team, losing_team, season):
     if predicted_result is None:
         print("Failed to find matchup: {}".format(key))
         return None
-
     predicted_team = key[5:9]
-    if str(winning_team) == str(predicted_team) and predicted_result >= .5:
+    if predicted_result >= .5:
         correct_pick = True
         loss = get_loss_single(predicted_result, 1)
-    else:
+    elif predicted_result < .5:
         correct_pick = False
-        loss = get_loss_single(predicted_result, 0)
+        loss = get_loss_single(predicted_result, 1)
 
     return {
         'loss': loss,
-        'correct': correct_pick
+        'correct': correct_pick,
+        'prediction': predicted_result,
+        'predicted_team': predicted_team,
+        'winning_team_id': winning_team,
+        'losing_team_id': losing_team,
+        'winning_team': TeamReader.get_team_name_by_id(winning_team),
+        'losing_team': TeamReader.get_team_name_by_id(losing_team)
     }
 
 loss_vals = []

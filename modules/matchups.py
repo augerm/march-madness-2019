@@ -8,7 +8,7 @@ import numpy as np
 import os
 
 file_path = os.path.dirname(__file__)
-input_file = os.path.join(file_path, '../data/DataFiles/NCAATourneySeeds.csv')
+input_file = os.path.join(file_path, '../data/Stage2DataFiles/NCAATourneySeeds.csv')
 regular_season_file = os.path.join(file_path, '../data/DataFiles/RegularSeasonCompactResults.csv')
 post_season_file = os.path.join(file_path, '../data/DataFiles/NCAATourneyCompactResults.csv')
 
