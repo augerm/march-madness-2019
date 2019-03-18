@@ -45,9 +45,9 @@ class Matchups:
         return a list of completed matchups
         :return:
         """
-        def read_compact_result_to_dict(file, last_year):
+        def read_compact_result_to_dict(file, last_year, first_year = 2002):
             data = pd.read_csv(file)
-            data = data[data['Season'] <= last_year]
+            data = data[(data['Season'] <= last_year) & (data['Season'] >= first_year)]
             data['teamA'] = data[['WTeamID', 'LTeamID']].min(axis=1)
             data['teamB'] = data[['WTeamID', 'LTeamID']].max(axis=1)
             data['scoreA'] = np.where(data['teamA'] == data['WTeamID'], data['WScore'], data['LScore'])
@@ -64,6 +64,7 @@ class Matchups:
         completed_matchups_list_dict.extend(data)
         completed_matchups_list_dict.extend(post_data)
         completed_matchups = []
+        count = 0
         for i in range(len(completed_matchups_list_dict)):
             cur_matchup = completed_matchups_list_dict[i]
             teamA_key = Team.get_key(cur_matchup['year'], cur_matchup['teamA'])
@@ -78,11 +79,13 @@ class Matchups:
                                              cur_matchup['result'])
 
             if teamA is None or teamB is None:
-                print("None vaule {}th row for teamA {}, teamB{}, need mapping".format(i, teamA_key, teamB_key))
+                count = count + 1
+                pass
             else:
                 teamA.add_completed_match(completed_match)
                 teamB.add_completed_match(completed_match)
                 completed_matchups.append(completed_match)
+        print("{} of {} games are not added due to missing data.".format(count, len(completed_matchups_list_dict)))
         return completed_matchups
 
 
