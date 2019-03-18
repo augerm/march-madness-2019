@@ -1,5 +1,4 @@
 import pandas
-from statistics import mean
 from modules.loss_function import get_loss_single
 
 prediction_file = 'output/output.txt'
