@@ -40,20 +40,32 @@ def get_loss(winning_team, losing_team, season):
         return None
 
     predicted_team = key[5:9]
-    if str(winning_team) == str(predicted_team):
-        return get_loss_single(predicted_result, 1)
+    if str(winning_team) == str(predicted_team) and predicted_result >= .5:
+        correct_pick = True
+        loss = get_loss_single(predicted_result, 1)
     else:
-        return get_loss_single(predicted_result, 0)
+        correct_pick = False
+        loss = get_loss_single(predicted_result, 0)
 
-    print(predicted_result)
+    return {
+        'loss': loss,
+        'correct': correct_pick
+    }
 
 loss_vals = []
+correct_picks = 0
+total_picks = 0
 for i in range(len(results_seasons)):
     winning_team = results_winning_team[i]
     losing_team = results_losing_team[i]
     season = results_seasons[i]
     loss = get_loss(winning_team, losing_team, season)
-    loss_vals.append(loss)
+    if loss is None:
+        continue
+    loss_vals.append(loss['loss'])
+    if loss['correct']:
+        correct_picks += 1
+    total_picks += 1
     print(loss)
 
 sum = 0
@@ -64,3 +76,4 @@ for i in range(len(loss_vals)):
         sum += loss_vals[i]
 
 print("Average Loss: {}".format(sum/num_vals))
+print("Correct Picks: {}/{}".format(correct_picks, total_picks))
