@@ -5,10 +5,10 @@ from modules.models.team import Team
 from modules.models.kenpom_data import KenPom
 
 file_path = os.path.dirname(__file__)
-teams_input_file = os.path.join(file_path, '../../data/DataFiles/Teams.csv')
-teams_spelling_file = os.path.join(file_path, '../../data/DataFiles/TeamSpellings.csv')
-kenpom_file = os.path.join(file_path, '../../data/DataFiles/kenpom.csv')
-kenpom_map = os.path.join(file_path, '../../data/DataFiles/kenpom_map_v2.csv')
+teams_input_file = os.path.join(file_path, '../../data/Stage2DataFiles/Teams.csv')
+teams_spelling_file = os.path.join(file_path, '../../data/Stage2DataFiles/TeamSpellings.csv')
+kenpom_file = os.path.join(file_path, '../../data/Stage2DataFiles/kenpom.csv')
+kenpom_map = os.path.join(file_path, '../../data/Stage2DataFiles/kenpom_map_v3.csv')
 
 class TeamReader:
 
@@ -38,8 +38,7 @@ class TeamReader:
             start_season = start_seasons[i]
             end_season = end_seasons[i]
             for year in range(start_season, end_season+1):
-                #TODO: need to remove 2019 for future prediction
-                if year < 2002 or year == 2019:
+                if year < 2002:
                     continue
                 x = self.getTeamDataBySeason(data, team_id, year)
                 if x is None:
@@ -126,7 +125,7 @@ class TeamReader:
             data_list.append(data)
         df = pd.concat(data_list)
         df = df.drop('W-L', axis=1) # drop W-L since there are wrong values. treating some value as date format
-        df.to_csv("../data/DataFiles/kenpom.csv", index=False)
+        df.to_csv("../data/Stage2DataFiles/kenpom.csv", index=False)
 
     @staticmethod
     def map_kenpom_data():
@@ -139,12 +138,12 @@ class TeamReader:
         teams = pd.read_csv(teams_spelling_file, encoding="ISO-8859-1")
         teams.rename(columns = {'TeamNameSpelling':'Team'},inplace = True)
         new_data = data.merge(teams, on='Team', how='left')
-        new_data.to_csv("../data/DataFiles/kenpom_map_v1.csv", index=False)
+        new_data.to_csv("../data/Stage2DataFiles/kenpom_map_v1.csv", index=False)
 
     @staticmethod
     def get_team_name_by_id(id):
         teams_df = pd.read_csv(teams_input_file)
         team_names = list(teams_df['TeamName'])
         team_ids = list(teams_df['TeamID'])
-        index = team_ids.index(id)
+        index = team_ids.index(int(id))
         return team_names[index]
