@@ -24,6 +24,5 @@ def get_loss_single(predicted_results, real_results):
     """
     predicted_results = np.array(predicted_results)
     num = 1
-    print(real_results)
     loss = -1./num * np.sum(real_results * np.log(predicted_results) + (1-real_results) * np.log(1-predicted_results))
     return loss
