@@ -33,7 +33,7 @@ def train_model():
 
     # optimizer - sgd, rmsprop
     model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=[metrics.binary_accuracy])
-    model.fit(np.array(train_x), np.array(train_y), epochs=40, batch_size=100)
+    model.fit(np.array(train_x), np.array(train_y), validation_split=0.25, epochs=40, batch_size=100)
 
     test_loss, test_acc = model.evaluate(np.array(train_x), np.array(train_y))
 
