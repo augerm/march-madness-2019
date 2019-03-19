@@ -27,8 +27,8 @@ class KenPom:
         """
         #TODO: Add conference one hot encoded
         if simple:
-            return [self.offensive_efficiency, self.defensive_efficiency, self.tempo,
-                    self.non_conference_schedule_efficieny_margin]
+            return [self.offensive_efficiency, self.defensive_efficiency, self.country_rank,self.tempo,
+                    self.luck]
         else:
             return [self.country_rank, self.regional_rank, self.efficiency_margin,
                 self.offensive_efficiency, self.defensive_efficiency,

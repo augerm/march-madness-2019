@@ -9,9 +9,10 @@ class BracketGenerator:
         self.season = season
         self.tourney_seeds_df = pandas.read_csv(tourney_seeds_file)
         self.predictions = pandas.read_csv(predictions_file)
-        self.tourney_seeds = self.tourney_seeds_df[self.tourney_seeds_df['Season'] == self.season]
+        self.tourney_seeds = self.tourney_seeds_df[self.tourney_seeds_df['Season'] == self.season].reset_index(drop=True)
         confs = ['W', 'X', 'Y', 'Z']
         matchups = {}
+        self.run_pre_round()
 
         for conf in confs:
             matchups[conf] = []
@@ -22,6 +23,23 @@ class BracketGenerator:
         winning_team_w_x = self.get_result(final_four['W'][0], final_four['X'][0])
         winning_team_y_z = self.get_result(final_four['Y'][0], final_four['Z'][0])
         championship_team = self.get_result(winning_team_w_x, winning_team_y_z)
+
+    def run_pre_round(self):
+        prematchup_teams_a = self.tourney_seeds[self.tourney_seeds['Seed'].str.endswith("a")]
+        for seed_a, id in zip(prematchup_teams_a['Seed'].values, prematchup_teams_a['TeamID'].values):
+            seed_b = seed_a.replace('a', 'b')
+            teamIDB = self.tourney_seeds[self.tourney_seeds['Seed']==seed_b]['TeamID'].values[0]
+            # teamB_name = TeamReader.get_team_name_by_id(teamIDA)
+            teamIDA = id
+            # teamA_name = TeamReader.get_team_name_by_id(teamIDA)
+            print("preround - {} - {}".format(seed_a, seed_b))
+            new_seed = seed_a[:-1]
+            winningteam = int(self.get_result(teamIDA, teamIDB))
+            self.tourney_seeds.loc[len(self.tourney_seeds)] = [self.season, new_seed, winningteam]
+        self.tourney_seeds = self.tourney_seeds[~self.tourney_seeds['Seed'].str.endswith("a")]
+        self.tourney_seeds = self.tourney_seeds[~self.tourney_seeds['Seed'].str.endswith("b")]
+        self.tourney_seeds = self.tourney_seeds.sort_values('Seed').reset_index(drop=True)
+
 
     def run_bracket_to_final_four(self, matchups):
         next_round_matchups = {}
@@ -51,8 +69,8 @@ class BracketGenerator:
             winning_team_id = key[10:14]
         winning_team = TeamReader.get_team_name_by_id(winning_team_id)
         print("{} vs {} - {}".format(teamA_name, teamB_name, winning_team))
-        return winning_team_id
+        return int(winning_team_id)
 
 
 
-bracket_generator = BracketGenerator(2018)
+bracket_generator = BracketGenerator(2019)

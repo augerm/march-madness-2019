@@ -11,3 +11,4 @@ testing/.pytest_cache
 keras_models
 paper/
 deployment/settings.py
+.pytest_cache
