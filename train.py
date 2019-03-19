@@ -6,10 +6,13 @@ from modules.matchups import Matchups
 from modules.loss_function import get_loss_single
 import random
 
+
 # maybe also load test data, and predict data!
-def get_train_data(train_num=10000, shuffle=False, until_year= 2015):
+def get_train_data(train_num=10000, shuffle=False, until_year= 2015,  post_season_only=False, regular_season_only=False):
     matchups = Matchups()
-    completed_matchups = matchups.get_completed_matchups(until_year=until_year)
+    completed_matchups = matchups.get_completed_matchups(until_year=until_year,
+                                                         post_season_only=post_season_only,
+                                                         regular_season_only=regular_season_only)
     train_x = list(map(lambda completed_matchup: completed_matchup.get_features(), completed_matchups))
     train_y = list(map(lambda completed_matchup: completed_matchup.result, completed_matchups))
     if shuffle:
@@ -33,8 +36,10 @@ def get_test_data():
     print("finished loading test data")
     return np.array(test_x), np.array(test_y)
 
-def train_model(shuffle_training=False):
-    train_x, train_y = get_train_data(until_year=2015, shuffle=shuffle_training)
+
+def train_model(train_num=10000, shuffle_training=False, regular_season_only=False, post_season_only=False):
+    train_x, train_y = get_train_data(train_num=train_num, until_year=2015, shuffle=shuffle_training,
+                                      regular_season_only=regular_season_only, post_season_only= post_season_only)
     test_x, test_y = get_test_data()
     print(len(train_x), len(train_y))
     # Create neural network architecture
@@ -55,4 +60,5 @@ def train_model(shuffle_training=False):
     date_str = str(datetime.datetime.now().strftime("%d-%B-%Y-%I-%M%p"))
     model.save('keras_models/{}.h5'.format(date_str))
 
-train_model()
+
+train_model(train_num=10000, shuffle_training=False, regular_season_only=False, post_season_only=False)
