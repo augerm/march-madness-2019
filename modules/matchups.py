@@ -38,7 +38,7 @@ class Matchups:
         return matchups
 
 
-    def get_completed_matchups(self, until_year=2018):
+    def get_completed_matchups(self, first_year=2002, until_year=2018, post_season_only=False, regular_season_only=False):
         """
         until_year: if equal 2018, it will return all regular season of 2018, and regular + post season before 2018
 
@@ -59,10 +59,17 @@ class Matchups:
                 ['year', 'teamA', 'teamB', 'scoreA', 'scoreB', 'day_num', 'result']].to_dict('records')
             return return_dict
         completed_matchups_list_dict = []
-        data = read_compact_result_to_dict(regular_season_file,  last_year=until_year)
-        post_data = read_compact_result_to_dict(post_season_file, last_year=until_year - 1)
-        completed_matchups_list_dict.extend(data)
-        completed_matchups_list_dict.extend(post_data)
+        if regular_season_only:
+            data = read_compact_result_to_dict(regular_season_file,  first_year=first_year, last_year=until_year)
+            completed_matchups_list_dict.extend(data)
+        elif post_season_only:
+            post_data = read_compact_result_to_dict(post_season_file, first_year=first_year, last_year=until_year - 1)
+            completed_matchups_list_dict.extend(post_data)
+        else:
+            data = read_compact_result_to_dict(regular_season_file,  first_year=first_year, last_year=until_year)
+            post_data = read_compact_result_to_dict(post_season_file, first_year=first_year, last_year=until_year - 1)
+            completed_matchups_list_dict.extend(data)
+            completed_matchups_list_dict.extend(post_data)
         completed_matchups = []
         count = 0
         for i in range(len(completed_matchups_list_dict)):
