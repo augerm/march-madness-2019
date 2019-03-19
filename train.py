@@ -12,15 +12,12 @@ def get_train_data(train_num=10000, shuffle=False, until_year= 2015):
     completed_matchups = matchups.get_completed_matchups(until_year=until_year)
     train_x = list(map(lambda completed_matchup: completed_matchup.get_features(), completed_matchups))
     train_y = list(map(lambda completed_matchup: completed_matchup.result, completed_matchups))
-    if not shuffle:
-        train_x = train_x[:train_num]
-        train_y = train_y[:train_num]
-    else:
-        random.seed(1) # set a seed so we could replicate the output
-        random_index = random.randint(0, len(train_x)-1, train_num)
-        train_x = train_x[random_index]
-        train_y = train_y[random_index]
-        print(len(train_x), len(train_y))
+    if shuffle:
+        random.seed(1)
+        random.shuffle(train_x)
+        random.shuffle(train_y)
+    train_x = train_x[:train_num]
+    train_y = train_y[:train_num]
     # normalize data
     train_x = np.array(train_x)
     train_y = np.array(train_y)
@@ -36,8 +33,8 @@ def get_test_data():
     print("finished loading test data")
     return np.array(test_x), np.array(test_y)
 
-def train_model():
-    train_x, train_y = get_train_data(until_year=2015, shuffle=True)
+def train_model(shuffle_training=False):
+    train_x, train_y = get_train_data(until_year=2015, shuffle=shuffle_training)
     test_x, test_y = get_test_data()
     print(len(train_x), len(train_y))
     # Create neural network architecture
@@ -51,11 +48,9 @@ def train_model():
     model.fit(np.array(train_x), np.array(train_y), validation_split=0.25, epochs=40, batch_size=100)
     # model.fit(np.array(train_x), np.array(train_y), validation_data=(test_x, test_y), epochs=1, batch_size=1000)
 
-    test_loss, test_acc = model.evaluate(np.array(train_x), np.array(train_y))
     test_loss_test, test_acc_test = model.evaluate(np.array(test_x), np.array(test_y))
 
-    print('Test accuracy:', test_acc)
-    print('Test accuracy for march madness 2016-2018:', test_acc_test)
+    print('march madness 2016-2018: loss {},   accuracy {},  :'.format(test_loss_test, test_acc_test))
 
     date_str = str(datetime.datetime.now().strftime("%d-%B-%Y-%I-%M%p"))
     model.save('keras_models/{}.h5'.format(date_str))
