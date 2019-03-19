@@ -17,7 +17,7 @@ class BracketGenerator:
         for conf in confs:
             matchups[conf] = []
             matchups[conf] = [j for i,j in zip(self.tourney_seeds['Seed'],self.tourney_seeds['TeamID']) if i.startswith(conf)]
-            print(matchups[conf])
+            # print(matchups[conf])
 
         final_four = self.run_bracket_to_final_four(matchups)
         winning_team_w_x = self.get_result(final_four['W'][0], final_four['X'][0])
@@ -68,7 +68,7 @@ class BracketGenerator:
         else:
             winning_team_id = key[10:14]
         winning_team = TeamReader.get_team_name_by_id(winning_team_id)
-        print("{} vs {} - {}".format(teamA_name, teamB_name, winning_team))
+        print("{} vs {} - {} - {:.3f}".format(teamA_name, teamB_name, winning_team, max(result, 1-result)))
         return int(winning_team_id)
 
 
