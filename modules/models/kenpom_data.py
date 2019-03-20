@@ -1,3 +1,5 @@
+ACTIVE_FEATURES = ['offensive_efficiency', 'defensive_efficiency', 'country_rank', 'tempo', 'luck']
+
 class KenPom:
     def __init__(self, country_rank, regional_rank, conference, Adj_EM, AdjO, AdjO_rank, AdjD, AdjD_rank, AdjT, AdjT_rank, luck, luck_rank, opp_AdjEM, opp_AdjEM_rank, opp_AdjO, opp_AdjO_rank, opp_AdjD, opp_AdjD_rank, NCSOS):
         self.country_rank = country_rank
@@ -20,18 +22,25 @@ class KenPom:
         self.schedule_defensive_margin_rank = opp_AdjD_rank
         self.non_conference_schedule_efficieny_margin = NCSOS
 
-    def get_features(self, simple=True):
+    def get_features(self):
         """
         :return: features excluding the rank of values. since they are highly correlated. we may use another
         to say only return rank.
         """
-        #TODO: Add conference one hot encoded
-        if simple:
-            return [self.offensive_efficiency, self.defensive_efficiency, self.country_rank,self.tempo,
-                    self.luck]
-        else:
-            return [self.country_rank, self.regional_rank, self.efficiency_margin,
-                self.offensive_efficiency, self.defensive_efficiency,
-                self.tempo,  self.luck, self.schedule_efficiency_margin,  self.schedule_offensive_margin,
-                self.schedule_defensive_margin, self.non_conference_schedule_efficieny_margin]
 
+        features = []
+        for feature_name in ACTIVE_FEATURES:
+            feature = getattr(self, feature_name)
+            if feature is None:
+                print("No feature named {} in feature set... Ignoring...".format(feature_name))
+            else:
+                features.append(feature)
+
+        return features
+
+    @staticmethod
+    def get_features_list():
+        feature_names = []
+        for feature_name in ACTIVE_FEATURES:
+            feature_names.append(feature_name)
+        return feature_names
