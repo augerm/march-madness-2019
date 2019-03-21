@@ -1,4 +1,4 @@
-ACTIVE_FEATURES = ['offensive_efficiency', 'defensive_efficiency', 'country_rank', 'tempo', 'luck']
+ACTIVE_FEATURES = ['offensive_efficiency', 'defensive_efficiency', 'country_rank', 'tempo', 'luck', 'schedule_offensive_margin', 'schedule_defensive_margin']
 
 class KenPom:
     def __init__(self, country_rank, regional_rank, conference, Adj_EM, AdjO, AdjO_rank, AdjD, AdjD_rank, AdjT, AdjT_rank, luck, luck_rank, opp_AdjEM, opp_AdjEM_rank, opp_AdjO, opp_AdjO_rank, opp_AdjD, opp_AdjD_rank, NCSOS):

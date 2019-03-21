@@ -13,7 +13,8 @@ file_path = os.path.dirname(__file__)
 keras_models_directory = os.path.join(file_path, 'keras_models')
 
 params = {
-    'EPOCHS': 1,
+    'DATA_SIZE': 120000,
+    'EPOCHS': 20,
     'BATCH_SIZE': 100,
     'VALIDATION_SPLIT': .25,
     'OPTIMIZER': 'rmsprop',
@@ -27,6 +28,21 @@ params = {
         {
             'TYPE': 'Dense',
             'NUM_NODES': 600,
+            'ACTIVATION': 'sigmoid'
+        },
+        {
+            'Type': 'Dense',
+            'NUM_NODES': 300,
+            'ACTIVATION': 'sigmoid'
+        },
+        {
+            'Type': 'Dense',
+            'NUM_NODES': 150,
+            'ACTIVATION': 'sigmoid'
+        },
+        {
+            'Type': 'Dense',
+            'NUM_NODES': 75,
             'ACTIVATION': 'sigmoid'
         }
     ],
@@ -99,7 +115,7 @@ def train_model(train_num=10000, shuffle_training=False, regular_season_only=Fal
 
     print('march madness 2016-2018: loss {},   accuracy {},  :'.format(test_loss_test, test_acc_test))
 
-    date_str = str(datetime.datetime.now().strftime("%d-%B-%Y-%I-%M%p"))
+    date_str = str(datetime.datetime.now().strftime("%d-%B-%Y-%I-%M%p")) + "-" + str(test_loss_test)
     os.makedirs(os.path.join(keras_models_directory, date_str))
     model.save('{}/{}/model.h5'.format(keras_models_directory, date_str))
     write_to_json(os.path.join(keras_models_directory, date_str, 'features.json'), Match.get_features_list())
@@ -107,4 +123,4 @@ def train_model(train_num=10000, shuffle_training=False, regular_season_only=Fal
     write_to_json(os.path.join(keras_models_directory, date_str, 'accuracy.json'), { 'loss': str(test_loss_test), 'accuracy': str(test_acc_test) })
 
 
-train_model(train_num=10000, shuffle_training=False, regular_season_only=False, post_season_only=False)
+train_model(train_num=params['DATA_SIZE'], shuffle_training=False, regular_season_only=False, post_season_only=False)
