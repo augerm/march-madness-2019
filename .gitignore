@@ -12,3 +12,7 @@ keras_models
 paper/
 deployment/settings.py
 .pytest_cache
+modules/services/men*
+modules/services/api*
+testing/*.ipynb
+testing/bot_user.py
