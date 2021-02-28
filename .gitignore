@@ -4,7 +4,6 @@ __pycache__/
 .DS_Store
 service-keys
 venv/
-data/
 testing/.ipynb_checkpoints
 testing/.pytest_cache
 keras_models
