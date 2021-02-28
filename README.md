@@ -5,5 +5,5 @@
 
 ## Docker Commands
 
-SSH into container
-`docker run --rm -it --entrypoint bash <image-id>`
+1) `docker build . -t march-madness-2021`
+2) `docker run --rm -it --entrypoint bash march-madness-2021`
