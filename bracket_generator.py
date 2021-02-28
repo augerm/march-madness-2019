@@ -1,7 +1,7 @@
 import pandas
 from modules.services.teams_reader import TeamReader
 
-tourney_seeds_file = 'data/Stage2DataFiles/MNCAATourneySeeds.csv'
+tourney_seeds_file = 'data/MNCAATourneySeeds.csv'
 predictions_file = 'output/output.txt'
 
 class BracketGenerator:
