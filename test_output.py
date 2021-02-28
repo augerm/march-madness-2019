@@ -3,7 +3,7 @@ from modules.loss_function import get_loss_single
 from modules.services.teams_reader import TeamReader
 
 prediction_file = 'output/output.txt'
-results_file = 'data/Stage2DataFiles/NCAATourneyCompactResults.csv'
+results_file = 'data/Stage2DataFiles/MNCAATourneyCompactResults.csv'
 
 prediction_df = pandas.read_csv(prediction_file)
 results_df = pandas.read_csv(results_file)

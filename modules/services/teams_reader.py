@@ -5,8 +5,8 @@ from modules.models.team import Team
 from modules.models.kenpom_data import KenPom
 
 file_path = os.path.dirname(__file__)
-teams_input_file = os.path.join(file_path, '../../data/Stage2DataFiles/Teams.csv')
-teams_spelling_file = os.path.join(file_path, '../../data/Stage2DataFiles/TeamSpellings.csv')
+teams_input_file = os.path.join(file_path, '../../data/Stage2DataFiles/MTeams.csv')
+teams_spelling_file = os.path.join(file_path, '../../data/Stage2DataFiles/MTeamSpellings.csv')
 kenpom_file = os.path.join(file_path, '../../data/Stage2DataFiles/kenpom.csv')
 kenpom_map = os.path.join(file_path, '../../data/Stage2DataFiles/kenpom_map_v3.csv')
 

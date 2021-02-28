@@ -2,7 +2,7 @@ import pandas as pd
 from modules.services.teams_reader import TeamReader
 import math
 
-tourney_seeds_file = 'data/Stage2DataFiles/NCAATourneySeeds.csv'
+tourney_seeds_file = 'data/Stage2DataFiles/MNCAATourneySeeds.csv'
 predictions_file = 'output/output.txt'
 
 class Helper():
