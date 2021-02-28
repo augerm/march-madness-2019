@@ -4,55 +4,17 @@ import numpy as np
 import datetime
 import random
 import os
+import json
 
 from modules.models.match import Match
 from modules.matchups import Matchups
-from modules.utilities.file import write_to_file, write_to_json
+from modules.utilities.file import write_to_file, write_to_json, read_json
 
 file_path = os.path.dirname(__file__)
 keras_models_directory = os.path.join(file_path, 'keras_models')
 
-params = {
-    'DATA_SIZE': 120000,
-    'EPOCHS': 20,
-    'BATCH_SIZE': 100,
-    'VALIDATION_SPLIT': .25,
-    'OPTIMIZER': 'rmsprop',
-    'LOSS_FUNCTION': 'binary_crossentropy',
-    'SHUFFLE_TRAINING_DATA': True,
-    'INPUT_LAYER': {
-        'TYPE': 'Dense',
-        'ACTIVATION': 'sigmoid'
-    },
-    'HIDDEN_LAYERS': [
-        {
-            'TYPE': 'Dense',
-            'NUM_NODES': 600,
-            'ACTIVATION': 'sigmoid'
-        },
-        {
-            'Type': 'Dense',
-            'NUM_NODES': 300,
-            'ACTIVATION': 'sigmoid'
-        },
-        {
-            'Type': 'Dense',
-            'NUM_NODES': 150,
-            'ACTIVATION': 'sigmoid'
-        },
-        {
-            'Type': 'Dense',
-            'NUM_NODES': 75,
-            'ACTIVATION': 'sigmoid'
-        }
-    ],
-    'OUTPUT_LAYER': {
-        'TYPE': 'Dense',
-        'NUM_NODES': 1,
-        'ACTIVATION': 'sigmoid'
-    }
-}
-
+config = read_json(os.path.join("configs", "config.json"))
+params = read_json(os.path.join("configs", "neuralNetConfigs", config.get('neuralNetConfig')))
 
 # maybe also load test data, and predict data!
 def get_train_data(train_num=10000, shuffle=False, until_year= 2015,  post_season_only=False, regular_season_only=False):
