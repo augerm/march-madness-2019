@@ -8,9 +8,9 @@ import numpy as np
 import os
 
 file_path = os.path.dirname(__file__)
-input_file = os.path.join(file_path, '../data/Stage2DataFiles/MNCAATourneySeeds.csv')
-regular_season_file = os.path.join(file_path, '../data/Stage2DataFiles/MRegularSeasonCompactResults.csv')
-post_season_file = os.path.join(file_path, '../data/Stage2DataFiles/MNCAATourneyCompactResults.csv')
+input_file = os.path.join(file_path, '../data/MNCAATourneySeeds.csv')
+regular_season_file = os.path.join(file_path, '../data/MRegularSeasonCompactResults.csv')
+post_season_file = os.path.join(file_path, '../data/MNCAATourneyCompactResults.csv')
 
 class Matchups:
     def __init__(self):

@@ -5,10 +5,10 @@ from modules.models.team import Team
 from modules.models.kenpom_data import KenPom
 
 file_path = os.path.dirname(__file__)
-teams_input_file = os.path.join(file_path, '../../data/Stage2DataFiles/MTeams.csv')
-teams_spelling_file = os.path.join(file_path, '../../data/Stage2DataFiles/MTeamSpellings.csv')
-kenpom_file = os.path.join(file_path, '../../data/Stage2DataFiles/kenpom.csv')
-kenpom_map = os.path.join(file_path, '../../data/Stage2DataFiles/kenpom_map_v3.csv')
+teams_input_file = os.path.join(file_path, '../../data/MTeams.csv')
+teams_spelling_file = os.path.join(file_path, '../../data/MTeamSpellings.csv')
+kenpom_file = os.path.join(file_path, '../../data/kenpom.csv')
+kenpom_map = os.path.join(file_path, '../../data/kenpom_map_v3.csv')
 
 class TeamReader:
 
@@ -125,7 +125,7 @@ class TeamReader:
             data_list.append(data)
         df = pd.concat(data_list)
         df = df.drop('W-L', axis=1) # drop W-L since there are wrong values. treating some value as date format
-        df.to_csv("../data/Stage2DataFiles/kenpom.csv", index=False)
+        df.to_csv("../data/kenpom.csv", index=False)
 
     @staticmethod
     def map_kenpom_data():
@@ -138,7 +138,7 @@ class TeamReader:
         teams = pd.read_csv(teams_spelling_file, encoding="ISO-8859-1")
         teams.rename(columns = {'TeamNameSpelling':'Team'},inplace = True)
         new_data = data.merge(teams, on='Team', how='left')
-        new_data.to_csv("../data/Stage2DataFiles/kenpom_map_v1.csv", index=False)
+        new_data.to_csv("../data/kenpom_map_v1.csv", index=False)
 
     @staticmethod
     def get_team_name_by_id(id):
