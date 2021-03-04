@@ -2,7 +2,6 @@ from modules.matchups import Matchups
 from modules.match_predictor import MatchPredictor
 from modules.output_generator import OutputGenerator
 
-
 def main():
     match_predictor = MatchPredictor()
     output_generator = OutputGenerator()
